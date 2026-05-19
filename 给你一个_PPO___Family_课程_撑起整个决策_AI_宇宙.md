@@ -1,0 +1,204 @@
+     给你一个 PPO × Family 课程，撑起整个决策 AI 宇宙 \* { margin: 0; padding: 0; outline: 0; } body { font-family: "PingFang SC", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", Arial, sans-serif; line-height: 1.6; } .\_\_page\_content\_\_ { max-width: 667px; margin: 0 auto; padding: 20px; text-size-adjust: 100%; color: rgba(0, 0, 0, 0.9); padding-bottom: 64px; } .title { user-select: text; font-size: 22px; line-height: 1.4; margin-bottom: 14px; font-weight: 500; } .\_\_meta\_\_ { color: rgba(0, 0, 0, 0.3); font-size: 15px; line-height: 20px; hyphens: auto; word-break: break-word; margin-bottom: 50px; } .\_\_meta\_\_ .nick\_name { color: #576B95; } .\_\_meta\_\_ .copyright { color: rgba(0, 0, 0, 0.3); background-color: rgba(0, 0, 0, 0.05); padding: 0 4px; margin: 0 10px 10px 0; } blockquote.source { padding: 10px; margin: 30px 0; border-left: 5px solid #ccc; color: #333; font-style: italic; word-wrap: break-word; } blockquote.source a { cursor: pointer; text-decoration: underline; } .item\_show\_type\_0 > section { margin-top: 0; margin-bottom: 24px; } a { color: #576B95; text-decoration: none; cursor: default; } .text\_content { margin-bottom: 50px; user-select: text; font-size: 17px; white-space: pre-wrap; word-wrap: break-word; line-height: 28px; hyphens: auto; } .picture\_content .picture\_item { margin-bottom: 30px; } .picture\_content .picture\_item .picture\_item\_label { text-align: center; } img { max-width: 100%; } .pay\_subscribe\_notice { margin: 30px 0; padding: 20px; background: #fffbe6; border: 1px solid #ffe58f; border-radius: 8px; } .pay\_subscribe\_badge { display: inline-block; padding: 4px 12px; background: #faad14; color: #fff; border-radius: 4px; font-size: 14px; font-weight: 500; margin-bottom: 12px; } .pay\_subscribe\_desc { font-size: 15px; line-height: 1.8; color: rgba(0, 0, 0, 0.7); margin-bottom: 12px; } .pay\_subscribe\_hint { font-size: 13px; color: rgba(0, 0, 0, 0.4); } .\_\_bottom-bar\_\_ { display: flex; justify-content: space-between; align-items: center; position: fixed; bottom: 0; left: 0; right: 0; height: 64px; padding: 8px 20px; background: white; box-sizing: border-box; border-top: 1px solid rgba(0, 0, 0, 0.2); } .\_\_bottom-bar\_\_ .left { display: flex; align-items: center; font-size: 15px; white-space: nowrap; } .\_\_bottom-bar\_\_ .right { display: flex; } .\_\_bottom-bar\_\_ .sns\_opr\_btn { display: flex; align-items: center; user-select: none; background: transparent; border: 0; color: rgba(0, 0, 0, 0.9); font-size: 14px; } .\_\_bottom-bar\_\_ .sns\_opr\_btn:not(:last-child) { margin-right: 16px; } .\_\_bottom-bar\_\_ .sns\_opr\_btn > img { margin-right: 4px; }
+
+给你一个 PPO × Family 课程，撑起整个决策 AI 宇宙
+=================================
+
+原创 OpenDILab OpenDataLab 2022-12-02 18:10 上海
+
+> 原文地址: [https://mp.weixin.qq.com/s/cpZU9I6Is-1Y2IzLHprFCg](https://mp.weixin.qq.com/s/cpZU9I6Is-1Y2IzLHprFCg)
+
+![](https://mmbiz.qpic.cn/mmbiz_png/n3Mr5TfFd0fcCkuFTawfQXW3kDxPjaRWBoxcGlpULDUVBgXhJuqN2s1d6wYaH3w4pINOvbuRxiaYibqejKnpbmpA/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
+
+  
+
+**序幕**  
+
+  
+
+![](https://mmbiz.qpic.cn/mmbiz_jpg/Ak9PbJX9eib4GMyqkBUiaLwMmkS82KBsbdHnCn4j6eH9st9FWLXIjVicjZ2szSbdBiaqwDjK79olCCpDxme1U0wgdA/640?wx_fmt=jpeg)
+
+童年经典游戏
+
+  
+
+80、90年代出生的人，红白机总是童年时光重要的记忆片段之一。几叠游戏盒，两个手柄，就可以开启一整天的欢乐时光，乐此不疲地探索各种红白机游戏中的玩法、机制、彩蛋。虽然只是2维平面上的像素头小人，虽然只是“上上下下左右左右BABA”这般的简单按键，但依然被玩家们开发出了各种精彩纷呈的决策行为，时至今日，仍然有很多爱好者在挑战各种诸如“一命通关”，“最速通关”的游戏记录：
+
+  
+
+![](https://mmbiz.qpic.cn/mmbiz_gif/Ak9PbJX9eib4GMyqkBUiaLwMmkS82KBsbdXOPF06OqHR0ibibYQ2icSosUL5R4Gt87HLbbZk2snunpuFT1ZsDPLXz0g/640?wx_fmt=gif)
+
+B站UP主“探索者一九一二”录制的一命通关赤色要塞操作片段
+
+  
+
+![](https://mmbiz.qpic.cn/mmbiz_gif/Ak9PbJX9eib4GMyqkBUiaLwMmkS82KBsbdPr9abj6LFEXfDLyOcJnWl8RJguQibWhqusStUBP0DvcfuPKP2Dibj77Q/640?wx_fmt=gif)
+
+B站UP主“探索者一九一二”录制的一命通关魂斗罗操作片段  
+
+  
+
+而随着时代的发展，游戏类型也变得五花八门，于是玩家们探索的方式也愈加丰富，各类玩家解说攻略视频大大加快了游戏知识的传播速度，还有一系列基于规则的辅助工具将程序和算法引入到游戏探索之中。
+
+  
+
+最近几年，人工智能技术的发展更是大大提升了算法探索游戏的极限，从2016年 AlphaGo 在围棋领域技惊四座开始，再到后续2019年的  AlphaStar、OpenAI Five，以深度强化学习为核心的决策 AI，在这些复杂度和博弈性最顶尖的游戏中，一次又一次地创造着人工智能的新高峰。
+
+  
+
+但其实，这些最前沿的决策与智能，离我们并不遥远。比如在很多人的少年时代，玩家们通过个人自身的练习和尝试，朋友间数不清的讨论与琢磨，探索着这些红白机游戏中的种种策略，而在当下，其实我们也可以去学习和运用深度强化学习技术，从另一个视角去打造决策智能，解锁各种有趣有成就感的游戏玩法，还可以跳出游戏的圈子，尝试应用到各种各样的日常决策行为，以及各行各业的优化与设计中去。
+
+  
+
+想象一下，你不仅可以训练出一个帮你探索游戏玩法的最佳辅助，又可以拥有一个响应你各种日常指令的机器管家，自主导航和操作完成各种任务。
+
+  
+
+![](https://mmbiz.qpic.cn/mmbiz_gif/Ak9PbJX9eib4GMyqkBUiaLwMmkS82KBsbdD7bSPticMIlxicFQGiadkRyfPKic7GUSNS0CfCDpI4F0aAxNyCHVHfLtZQ/640?wx_fmt=gif)
+
+智能体在 habitat-sim 环境中按照指令执行任务
+
+  
+
+基于相似愿景，**上海人工智能实验室 OpenDILab （开源决策智能平台）**将会设计推出一系列的决策智能公开课。
+
+  
+
+首先推出的**决策智能入门级公开课** **PPO** **×** **Family** **由中国计算机学会主办，上海人工智能实验室承办，全球高校人工智能学术联盟、北京大学人工智能研究院多智能体中心、浙江大学上海高等研究院、商汤科技协办，知乎、机器之心、智海平台、 Paperweekly 支持。**顺利结课的学员还可获得由**中国计算机学会****颁发的课程学习认证证书**。
+
+  
+
+此课程旨在运用一种最经典的深度强化学习算法 **Proximal Policy Optimization (PPO)**，解决各种各样的决策智能问题，帮助一切对于深度强化学习技术有好奇心的人，轻便且高效地制作应用原型，了解和学习最强大最易用的 PPO × Family。在上完这门课程后，如果有进一步兴趣的话，受众可以将所学知识应用到相关领域中，利用更多的计算资源，去追逐和挑战更强大的人工智能。
+
+  
+
+![](https://mmbiz.qpic.cn/mmbiz_png/Ak9PbJX9eib4GMyqkBUiaLwMmkS82KBsbdeLtkCplE2m7ibqQCkSmEqE0U4iceKWXDNSkB3896WwVE9nmoJUymsGdg/640?wx_fmt=png)
+
+  
+
+**首映**
+
+  
+
+PPO 原本是在2017年由 OpenAI 提出的一种深度强化学习算法，而在往后几年中，又有诸多研究者从不同方面给 PPO 添加了许多算法技巧，时至今日，PPO 已成为最受欢迎的算法之一。
+
+  
+
+OpenDILab 总结了各方面研究者们的相关工作，又结合了开源发布一年来，在40多种决策环境中调优和实践的经验和总结，最终凝练而成了这门 PPO × Family 决策智能入门公开课。
+
+  
+
+**课程大纲**
+
+  
+
+![](https://mmbiz.qpic.cn/mmbiz_png/Ak9PbJX9eib4GMyqkBUiaLwMmkS82KBsbdPgrh6IV2vQF9KEuE7vnibKOPZ6M8lJp1DmCmLuBibSGDgMSelZtZic79w/640?wx_fmt=png)
+
+  
+
+**本系列课程将分为8节线上公开课，每节课40-50分钟。**相对于强化学习领域已有的优秀公开课，这门课并没有选择自顶向下地讲述强化学习发展演变的各个算法分支，而是自底向上地，从实际应用深度强化学习的角度出发，讲述把算法理论应用到实际决策问题时常用的种种分析方法和优化技巧，**通过这门课让受众盘清算法理论，理顺代码逻辑，玩转决策AI应用实践**。
+
+  
+
+其中，第1节课将会通过多重对比来讲解决策 AI 问题定义和研究的特殊之处；第2-7节课将会分别以子领域专题的形式，扩充 PPO × Family 的相关成员；最后一节课，将会综合运用之前累积的各方面知识，去设计和搭建一个“终极”智能体。
+
+  
+
+更重要的是，每节课程都会保持**“算法理论-代码实现-应用实践”**三合一的讲解模式，真正做到知其然（代码）又知其所以然（算法），并学以致用（应用）。
+
+  
+
+![](https://mmbiz.qpic.cn/mmbiz_png/Ak9PbJX9eib4GMyqkBUiaLwMmkS82KBsbdYu0g1ZdAdGib6DKtEBTPpu6l4Hqhw4mV5yzREcTsFIElTpqYP2xSHMA/640?wx_fmt=png)
+
+算法理论公式和代码实现的一一对应讲解
+
+  
+
+在 PPO × Family 八节课的过程中，受众会接触到各种各样的决策智能应用，最终结课时，就相当于完成了自动驾驶、量化交易、机器人控制、游戏 AI 等多个领域相关决策任务的入门实践，从而真正做到集中一点，演化出无限可能。
+
+  
+
+  
+
+此外，OpenDILab 也特地优化了每节课的实践任务的计算开销，整个 PPO × Family 系列课程并**不需要大量计算资源**，一定配置的个人电脑完全可以应对各种挑战（当然课程官方也会提供一些免费的计算资源用于备用）。
+
+  
+
+在上完这门课程后，如果有进一步兴趣的话，受众可以将所学知识应用到相关领域中，利用更多的计算资源，去追逐和挑战更强大的人工智能。而且，这门课程也会在每节课布置一些算法理论分析的小作业，如果能够坚持完成并参与讨论，可以获得**由中国计算机学会颁发的课程学习认证证书**。
+
+  
+
+**课程预告**
+
+  
+
+**目前，OpenDILab 已经建立了🌟****课程 GitHub****🌟相关仓库，每一节课程的课件、文字讲稿，代码，答疑等教学素材都会全部公开在这个仓库中。**而每节课的课程录像，将会在B站（账号：OpenDILab）、公众号平台（账号：OpenDILab决策AI）、知乎平台（账号：OpenDILab浦策）同步发布，欢迎保持关注。
+
+  
+
+**🌟PPO × Family 课程 GitHub链接：**  
+
+https://github.com/opendilab/PPOxFamily
+
+  
+
+另外，由于剪辑和制作需要，同时响应受众的需求不断优化课程内容，我们将会以每1-2周一节课的速度逐渐更新课程内容，也欢迎大家积极参与贡献，希望能够真正将知识传达给有需要的人，共建知识共享的开源社区。
+
+  
+
+**课程第一讲（开启决策 AI 探索之旅）将会在 2022年12月8日正式上线。**
+
+  
+
+**🌟**感兴趣的朋友可以扫描下方二维码，进入课程讨论群。如不能进群，可添加课程小助手微信（课程小助手微信：OpenDILab），备注「课程」，欢迎大家与我们交流。
+
+  
+
+**课程讨论群二维码**
+
+![](https://mmbiz.qpic.cn/mmbiz_png/Ak9PbJX9eib4GMyqkBUiaLwMmkS82KBsbdIIWUmqUV2roxBzVjyHIFczJIQIJUNlmIERYhgFQTaicDDkr3LlicAsNQ/640?wx_fmt=png)
+
+  
+
+**References：**
+
+  
+
+\[1\] https://github.com/Kautenja/nes-py
+
+\[2\] https://www.bilibili.com/video/BV14d4y1N7KH/?spm\_id\_from=333.999.0.0
+
+\[3\] https://github.com/facebookresearch/habitat-sim
+
+  
+
+  
+
+\- End -
+
+  
+
+**还有哪些你关心的话题？**
+
+**扫码入群,欢迎交流** ![](https://mmbiz.qpic.cn/mmbiz_png/7yjDpC9UfD6qKD9WCiaOd8HjSjiaMeTBNgCrp5PMqHnMAft2j0rj5bfyIzEajecZWhadWjhISZN7EquicHRHReYiaA/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
+
+最新数据集上架动态
+
+最全数据集内容解读
+
+最牛大佬在线答疑
+
+最活跃的同行圈子
+
+……
+
+  
+
+![](https://mmbiz.qpic.cn/mmbiz_gif/NUwbCdTuQQxsJibSZGyA8akP9TVyJfPcpJ4uIZJDj3akRUfv6cNbnksGJQsibq1aH8iaGDic7TvOaSwNGXLdQ8PC9A/640?wx_fmt=gif&wxfrom=5&wx_lazy=1)
+
+![](https://mmbiz.qpic.cn/mmbiz_jpg/7yjDpC9UfD7NEyym4C8KBFplT20DM2vqAUAysVwzco8icviaYQ6McYIHep7ythBW0oZic97dXnhS6LbnoyibAqCbLQ/640?wx_fmt=jpeg&wxfrom=5&wx_lazy=1&wx_co=1)
+
+添加小助手微信，发送“入群”，等待邀请
+
+![](http://mmbiz.qpic.cn/sz_mmbiz_png/hkUN8E95VAVbP7SgPzUZSbTKQF7ftQZSqvlNRLUiaulic4TPu7FFhCHvUVqQAkxn7uxtIRC8QegvibdibSrlnkwuxg/0?wx_fmt=png) OpenDataLab
+
+ ![](data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3C!-- Icon from Lucide by Lucide Contributors - https://github.com/lucide-icons/lucide/blob/main/LICENSE --%3E%3Cg fill='none' stroke='%23888888' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'%3E%3Cpath d='M2.062 12.348a1 1 0 0 1 0-.696a10.75 10.75 0 0 1 19.876 0a1 1 0 0 1 0 .696a10.75 10.75 0 0 1-19.876 0'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/g%3E%3C/svg%3E) 阅读![](data:image/svg+xml,%3Csvg width='25' height='24' viewBox='0 0 25 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M16.154 6.797l-.177 2.758h4.009c1.346 0 2.359 1.385 2.155 2.763l-.026.148-1.429 6.743c-.212.993-1.02 1.713-1.977 1.783l-.152.006-13.707-.006c-.553 0-1-.448-1-1v-8.58a1 1 0 0 1 1-1h2.44l1.263-.03.417-.018.168-.015.028-.005c1.355-.315 2.39-2.406 2.58-4.276l.01-.16.022-.572.022-.276c.074-.707.3-1.54 1.08-1.883 2.054-.9 3.387 1.835 3.274 3.62zm-2.791-2.52c-.16.07-.282.294-.345.713l-.022.167-.019.224-.023.604-.014.204c-.253 2.486-1.615 4.885-3.502 5.324l-.097.018-.204.023-.181.012-.256.01v8.218l9.813.004.11-.003c.381-.028.72-.304.855-.709l.034-.125 1.422-6.708.02-.11c.099-.668-.354-1.308-.87-1.381l-.098-.007h-5.289l.26-4.033c.09-1.449-.864-2.766-1.594-2.446zM7.5 11.606l-.21.005-2.241-.001v8.181l2.45.001v-8.186z' fill='%23000'/%3E%3C/svg%3E) 赞 ![](data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E  %3Cg fill='none' fill-rule='evenodd'%3E    %3Cpath d='M0 0h24v24H0z'/%3E    %3Cpath fill='%23576B95' d='M13.707 3.288l7.171 7.103a1 1 0 0 1 .09 1.32l-.09.1-7.17 7.104a1 1 0 0 1-1.705-.71v-3.283c-2.338.188-5.752 1.57-7.527 5.9-.295.72-1.02.713-1.177-.22-1.246-7.38 2.952-12.387 8.704-13.294v-3.31a1 1 0 0 1 1.704-.71zm-.504 5.046l-1.013.16c-4.825.76-7.976 4.52-7.907 9.759l.007.287c1.594-2.613 4.268-4.45 7.332-4.787l1.581-.132v4.103l6.688-6.623-6.688-6.623v3.856z'/%3E  %3C/g%3E%3C/svg%3E) 分享 ![](data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='24' height='24' viewBox='0 0 24 24'%3E  %3Cdefs%3E    %3Cpath id='a62bde5b-af55-42c8-87f2-e10e8a48baa0-a' d='M0 0h24v24H0z'/%3E  %3C/defs%3E  %3Cg fill='none' fill-rule='evenodd'%3E    %3Cmask id='a62bde5b-af55-42c8-87f2-e10e8a48baa0-b' fill='%23fff'%3E      %3Cuse xlink:href='%23a62bde5b-af55-42c8-87f2-e10e8a48baa0-a'/%3E    %3C/mask%3E    %3Cg mask='url(%23a62bde5b-af55-42c8-87f2-e10e8a48baa0-b)'%3E      %3Cg transform='translate(0 -2.349)'%3E        %3Cpath d='M0 2.349h24v24H0z'/%3E        %3Cpath fill='%23576B95' d='M16.45 7.68c-.954 0-1.94.362-2.77 1.113l-1.676 1.676-1.853-1.838a3.787 3.787 0 0 0-2.63-.971 3.785 3.785 0 0 0-2.596 1.112 3.786 3.786 0 0 0-1.113 2.687c0 .97.368 1.938 1.105 2.679l7.082 6.527 7.226-6.678a3.787 3.787 0 0 0 .962-2.618 3.785 3.785 0 0 0-1.112-2.597A3.687 3.687 0 0 0 16.45 7.68zm3.473.243a4.985 4.985 0 0 1 1.464 3.418 4.98 4.98 0 0 1-1.29 3.47l-.017.02-7.47 6.903a.9.9 0 0 1-1.22 0l-7.305-6.73-.008-.01a4.986 4.986 0 0 1-1.465-3.535c0-1.279.488-2.56 1.465-3.536A4.985 4.985 0 0 1 7.494 6.46c1.24-.029 2.49.4 3.472 1.29l.01.01L12 8.774l.851-.85.01-.01c1.046-.951 2.322-1.434 3.59-1.434 1.273 0 2.52.49 3.472 1.442z'/%3E      %3C/g%3E    %3C/g%3E  %3C/g%3E%3C/svg%3E) 推荐 ![](data:image/svg+xml,%3Csvg width='25' height='24' viewBox='0 0 25 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M22.242 7a2.5 2.5 0 0 0-2.5-2.5h-14a2.5 2.5 0 0 0-2.5 2.5v8.5a2.5 2.5 0 0 0 2.5 2.5h2.5v1.59a1 1 0 0 0 1.707.7l1-1a.569.569 0 0 0 .034-.03l1.273-1.273a.6.6 0 0 0-.8-.892v-.006L9.441 19.1l.001-2.3h-3.7l-.133-.007A1.3 1.3 0 0 1 4.442 15.5V7l.007-.133A1.3 1.3 0 0 1 5.742 5.7h14l.133.007A1.3 1.3 0 0 1 21.042 7v4.887a.6.6 0 1 0 1.2 0V7z' fill='%23000' fill-opacity='.9'/%3E%3Crect x='14.625' y='16.686' width='7' height='1.2' rx='.6' fill='%23000' fill-opacity='.9'/%3E%3Crect x='18.725' y='13.786' width='7' height='1.2' rx='.6' transform='rotate(90 18.725 13.786)' fill='%23000' fill-opacity='.9'/%3E%3C/svg%3E) 留言

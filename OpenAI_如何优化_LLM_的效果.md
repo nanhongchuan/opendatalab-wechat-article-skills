@@ -1,0 +1,408 @@
+     OpenAI 如何优化 LLM 的效果 \* { margin: 0; padding: 0; outline: 0; } body { font-family: "PingFang SC", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", Arial, sans-serif; line-height: 1.6; } .\_\_page\_content\_\_ { max-width: 667px; margin: 0 auto; padding: 20px; text-size-adjust: 100%; color: rgba(0, 0, 0, 0.9); padding-bottom: 64px; } .title { user-select: text; font-size: 22px; line-height: 1.4; margin-bottom: 14px; font-weight: 500; } .\_\_meta\_\_ { color: rgba(0, 0, 0, 0.3); font-size: 15px; line-height: 20px; hyphens: auto; word-break: break-word; margin-bottom: 50px; } .\_\_meta\_\_ .nick\_name { color: #576B95; } .\_\_meta\_\_ .copyright { color: rgba(0, 0, 0, 0.3); background-color: rgba(0, 0, 0, 0.05); padding: 0 4px; margin: 0 10px 10px 0; } blockquote.source { padding: 10px; margin: 30px 0; border-left: 5px solid #ccc; color: #333; font-style: italic; word-wrap: break-word; } blockquote.source a { cursor: pointer; text-decoration: underline; } .item\_show\_type\_0 > section { margin-top: 0; margin-bottom: 24px; } a { color: #576B95; text-decoration: none; cursor: default; } .text\_content { margin-bottom: 50px; user-select: text; font-size: 17px; white-space: pre-wrap; word-wrap: break-word; line-height: 28px; hyphens: auto; } .picture\_content .picture\_item { margin-bottom: 30px; } .picture\_content .picture\_item .picture\_item\_label { text-align: center; } img { max-width: 100%; } .pay\_subscribe\_notice { margin: 30px 0; padding: 20px; background: #fffbe6; border: 1px solid #ffe58f; border-radius: 8px; } .pay\_subscribe\_badge { display: inline-block; padding: 4px 12px; background: #faad14; color: #fff; border-radius: 4px; font-size: 14px; font-weight: 500; margin-bottom: 12px; } .pay\_subscribe\_desc { font-size: 15px; line-height: 1.8; color: rgba(0, 0, 0, 0.7); margin-bottom: 12px; } .pay\_subscribe\_hint { font-size: 13px; color: rgba(0, 0, 0, 0.4); } .\_\_bottom-bar\_\_ { display: flex; justify-content: space-between; align-items: center; position: fixed; bottom: 0; left: 0; right: 0; height: 64px; padding: 8px 20px; background: white; box-sizing: border-box; border-top: 1px solid rgba(0, 0, 0, 0.2); } .\_\_bottom-bar\_\_ .left { display: flex; align-items: center; font-size: 15px; white-space: nowrap; } .\_\_bottom-bar\_\_ .right { display: flex; } .\_\_bottom-bar\_\_ .sns\_opr\_btn { display: flex; align-items: center; user-select: none; background: transparent; border: 0; color: rgba(0, 0, 0, 0.9); font-size: 14px; } .\_\_bottom-bar\_\_ .sns\_opr\_btn:not(:last-child) { margin-right: 16px; } .\_\_bottom-bar\_\_ .sns\_opr\_btn > img { margin-right: 4px; }
+
+OpenAI 如何优化 LLM 的效果
+===================
+
+原创 xiaoming OpenDataLab 2023-11-30 19:37 上海
+
+> 原文地址: [https://mp.weixin.qq.com/s/rpYMQ5BGUHjkEYgA8\_4Z-w](https://mp.weixin.qq.com/s/rpYMQ5BGUHjkEYgA8_4Z-w)
+
+![](https://mmbiz.qpic.cn/mmbiz_gif/7yjDpC9UfD5Fk0NBJ7dbXDia22rOZUkW96YCA68Gp4IBtguxRGoExUAj8tH5Qd8eibGpnQqjIGQ2P8eHgOibibyS1w/640?wx_fmt=gif&wxfrom=5&wx_lazy=1)
+
+[![](https://mmbiz.qpic.cn/sz_mmbiz_jpg/7yjDpC9UfD7GTicGRHLveInsn4DSib6m2dGaYDW6UWz3egJ3uB8JJ4ickib3Uja8VvrwcCs60wFBaHibsc8NiaBlcvEg/640?wx_fmt=jpeg&wxfrom=5&wx_lazy=1&wx_co=1)](http://mp.weixin.qq.com/s?__biz=MzkxMjMxMjIwNQ==&mid=2247524116&idx=1&sn=51ac0acca9f8e5834ab24ecff0f0c25c&chksm=c10c0df6f67b84e000840d9b0208b6d379a18bece0c193748b6a3fa6be61355666a59e3aa5bb&scene=21#wechat_redirect)
+
+**点击图片→报名寻星计划→****上传原创数据集，领好礼****![](https://res.wx.qq.com/t/wx_fed/we-emoji/res/v1.3.10/assets/Expression/Expression_78@2x.png)**
+
+![](https://mmbiz.qpic.cn/mmbiz_png/ImBWRPFV69t1smBmbKPhmFhgLCwSRAMheY54qz3EibC9AvuicBsVu2tp0KdiaXeMKEYIrEEXMgPsbQGDhm8riaUSLg/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
+
+  
+
+> **来源：**本文基于 OpenAI 最新的分享 A Survey of Techniques for Maximizing LLM Performance 整理而成。由ChatGPT完成初稿后，再人工进行check和调整。
+> 
+> **作者:**Breezedeus
+> 
+> **链接:**
+> 
+> https://www.breezedeus.com/article/make-llm-greater
+
+**要点提炼：**
+
+  
+
+● 两个优化方向：**上下文优化**和 **LLM优化**
+
+● 三种优化方法：**Prompt Engineering** → **RAG** → **Fine-tuning**
+
+**● 提示工程 (Prompt Engineering)** 是开始优化的最佳起点。它适合于早期的测试和学习，尤其是当与评估结合使用时，它为进一步的优化建立了基准。但提示工程并不适合于引入新信息，或者可靠地复刻一个复杂的风格或方法。
+
+**● 检索增强生成 (RAG)** 适合引入新的信息，以及通过控制内容来减少幻觉。RAG 可以认为是一种 Dynamic Prompt Engineering，或者注入额外的信息。HyDE 在某些应用中能提升效果，值得了解下。使用 Ragas 度量标准对 RAG 进行性能评估。
+
+**● 模型精调 **(**Fine-tuning)** 可以改进模型性能，降低指令的复杂度。但它不适合给模型添加新知识。
+
+● 这三种优化方法不是互斥的，可以联合使用，多次迭代直至最优。
+
+  
+
+  
+
+优化的两个方向
+
+OpenAI 11月14日的分享里讲述了 LLM 优化时需要考虑的两个方向：**上下文优化** **(****Context Optimization)** 和 **LLM优化**。
+
+● 上下文优化：模型需要知道什么信息才能解决问题。
+
+● LLM优化：模型需要如何行动才能解决问题。
+
+![](https://mmbiz.qpic.cn/sz_mmbiz_png/7yjDpC9UfD711My3SnSKCGibJLRWictE3BFwtAsL7toicuzTib380HYlxZQLhMiaC5AVYqnYib4ujMAictykFK3Ewor5Q/640?wx_fmt=png&from=appmsg)
+
+  
+
+在对大型语言模型 (LLM)进行性能优化的过程中，OpenAI采用了一种综合性的优化流程。如下图所示，这个流程横跨了**上下文优化****(****Context Optimization)**与**LLM优化**两个关键维度。**上下文优化**关注于模型**需要了解的信息**，即为了成功执行任务，模型需要了解的背景知识。而**LLM优化**则着重于**模型的行为方式**，即模型采取的方法和行动来解决特定问题。
+
+  
+
+在这个流程中，**提示工程****(****Prompt Engineering)**作为起点，是测试和学习的基础，它能为后续优化提供一个基准。然而，它并不适用于引入新信息或可靠地复刻复杂的风格或方法，因为这受限于模型上下文窗口的大小。当需要更多上下文时，可以转向检索增强生成(Retrieval-Augmented Generation, RAG)，它通过增加简单的检索步骤或添加HyDE检索和事实核查步骤来提供上下文知识。
+
+  
+
+在流程的另一端，**模型精调(Fine-tuning)**则用于需要模型更一致地遵循指令的情形。这一系列操作不是线性的，可能需要将RAG和精调结合起来，尝试不同的组合，并评估其效果，以确定最适合的优化策略。通过不断的尝试和评估，可以系统地测量这些变化如何影响性能。
+
+  
+
+评估在整个流程中起着决定性作用，因为它决定是否需要更改策略以提升性能。
+
+![](https://mmbiz.qpic.cn/sz_mmbiz_png/7yjDpC9UfD711My3SnSKCGibJLRWictE3B9e4g7yALkAKaC0QUUoauXjYskfrGVBJ4ZAC56CkX0C6wjJzIFTxY3w/640?wx_fmt=png&from=appmsg)
+
+  
+
+  
+
+三种优化方法
+
+  
+
+  
+
+01
+
+**提示工程 (Prompt Engineering)**
+
+  
+
+在LLM性能优化的领域内，**提示工程**(Prompt Engineering)是一个至关重要的概念。优化的策略始于一些基本步骤，这些步骤要求我们编写**清晰的指令**，以便于模型可以理解和执行任务。同时，需要将复杂任务分解为更简单的子任务，从而使问题变得更加可管理。在这个过程中，给予GPTs时间去“思考”是另一项重要策略，这意味着让模型在生成响应之前有充分的内部处理时间。此外，**系统地测试变化**也是优化过程中的关键环节，这样我们就能评估每次调整对于性能的实际影响。设定好评估体系，保证优化朝着指定方向前进，而不是东一锤西一锤。
+
+  
+
+但提示工程的策略不应止步于此。为了进一步扩展其能力，可以提供**参考文本**和**使用外部工具**，这些做法能够进一步增强模型的能力，尤其是在需要广泛背景知识的复杂任务中。
+
+![](https://mmbiz.qpic.cn/sz_mmbiz_png/7yjDpC9UfD711My3SnSKCGibJLRWictE3BKybRXgianMuyrkiaib6fMoslNBx3qlMktvXibdqQjcXUTiaqlGicRBBTl6SQ/640?wx_fmt=png&from=appmsg)
+
+提示工程是开始优化的最佳起点。它适合于早期的测试和学习，尤其是当与评估结合使用时，它为进一步的优化建立了基准。但**提示工程并不适合于引入新信息，或者可靠地复刻一个复杂的风格或方法**，例如学习一种新的编程语言，它也不适合于最小化token的使用。
+
+![](https://mmbiz.qpic.cn/sz_mmbiz_png/7yjDpC9UfD711My3SnSKCGibJLRWictE3B5rTHFXhIlzM3nuB84x5XNx31uhUicj1xLlicdhBFQ4fHht0e7tZzUZKQ/640?wx_fmt=png&from=appmsg)
+
+  
+
+一个好的prompt示例：
+
+![](https://mmbiz.qpic.cn/sz_mmbiz_png/7yjDpC9UfD711My3SnSKCGibJLRWictE3B0iaiaHfYeMoyBdqDzOPn8S0nUe59V7Hob7JyFzZ5COEVegFn1VicmfcnQ/640?wx_fmt=png&from=appmsg)
+
+  
+
+可以在示例中加入**少量示例**(**少样本学习，Few-shot Learning**)：
+
+![](https://mmbiz.qpic.cn/sz_mmbiz_png/7yjDpC9UfD711My3SnSKCGibJLRWictE3BUNVkibs0kB9xwFian63aW18Gf9UFkliaxp8jkFdjgO4yThmwze8icp63HQ/640?wx_fmt=png&from=appmsg)
+
+  
+
+**简单总结下：**
+
+● 提示工程是开始优化的最佳点，可以快速测试和学习，但难以扩展。
+
+● 提示工程的策略：
+
+    a. 编写清晰的指令，这通常是人们首先出错的地方。
+
+    b. 将复杂任务分解成更简单的子任务，以便模型可以对每个子单元或子任务做出预测。
+
+    c. 给予GPT时间思考，通过提供详细指令来解构问题，使模型更有可能成功执行任务。
+
+  
+
+02
+
+**检索增强生成 (RAG)**
+
+**RAG** 一般流程：
+
+![](https://mmbiz.qpic.cn/sz_mmbiz_png/7yjDpC9UfD711My3SnSKCGibJLRWictE3BbO7Sj5U84Odu2njXyHqfctbyMFIH7sic6F6icmHU2HnEjOyxjXE8mRaA/640?wx_fmt=png&from=appmsg)
+
+  
+
+在优化大型语言模型(LLM)的过程中，我们会遇到一个选择的分岔点，即是采用**检索增强生成 (RAG)**还是**模型精调(Fine-tuning)**。这种决策可以通过比较短期记忆和长期记忆问题来解释。**当模型需要特定信息以回答问题时**，例如需要回答用户的直接询问或解决特定的信息查询任务，RAG提供了一种方法，通过检索来扩展模型的知识库。这类似于为即将参加考试的学生提供教科书 (开卷考试)，学生可以翻阅教科书找答案。
+
+  
+
+另一方面，当需要模型去**复刻特定的结构、风格或格式 (一致的指令执行)时，模型精调**就显得尤为重要。这可以类比于学生通过长时间的学习来内化知识，以便能够在没有提示的情况下复现所学内容。值得强调的是，**RAG和精调并不是互斥的，而是可以相互补充**。在某些情况下，将这两种技术结合使用可以实现最佳的模型性能，这是因为它们在不同的层面上增强了模型的能力。而且RAG+精调优化的整个过程可能需要多次迭代才能最终获得好的效果。
+
+![](https://mmbiz.qpic.cn/sz_mmbiz_png/7yjDpC9UfD711My3SnSKCGibJLRWictE3BTpUMIUWOQnZ6XtbibfLgjCY6qbeK6qtiazFpNBZv2FkogKV7nTRgIEyw/640?wx_fmt=png&from=appmsg)
+
+  
+
+RAG接近于给模型提供基于特定问题的上下文知识。
+
+**● 引入新的信息**，这些信息可能不在LLM中。
+
+**● 使用RAG控制内容来减少幻觉** (模型生成与现实不符的输出)，这是RAG的一个常见用途。通常的用例是提供内容给模型，并指示它仅使用该内容来回答问题，不使用LLM自有的知识，以此限制回答来自特定的知识库，减少幻觉。
+
+● RAG不适合的场景：
+
+    a. 教会模型理解广泛领域，如法律或医学。
+
+    b. 教会模型学习新的语言、格式或风格，这更多是模型精调的范畴。
+
+![](https://mmbiz.qpic.cn/sz_mmbiz_png/7yjDpC9UfD711My3SnSKCGibJLRWictE3BPoZvLJSCfmxXnzykN1Fcay1kp76zePV3tYV8cIx7X9Z6jkSTVuemoQ/640?wx_fmt=png&from=appmsg)
+
+  
+
+**成功案例**
+
+作者举了个关于RAG优化的成功案例。  
+
+在提升RAG(检索增强生成)的成功案例中，团队从45%的准确率开始，这个起点并不理想。他们尝试了许多方法，并用勾号和叉号来标记哪些方法最终被采用到生产中，哪些被舍弃。勾号代表的是那些成功进入生产的方法。
+
+  
+
+他们尝试**假设性文档嵌入**(**Hypothetical Document Embeddings, HyDE**)，HyDE不是仅与问题进行相似度搜索，而是生成一个假答案并与之进行相似度搜索。虽然在某些用例中这种方法效果很好，但在这里并不奏效。他们也尝试了精调嵌入，实际上改变了嵌入空间，基于他们的训练集来帮助模型找到正确答案。这在准确性方面表现良好，但由于成本高昂和速度缓慢，最终被舍弃。通过尝试不同大小块的信息和嵌入不同的内容部分来帮助模型辨识最相关的内容，提升到65%的准确率。
+
+  
+
+他们利用Reranking和对不同类别问题特别处理的方法，进一步提升到85%的准确率。
+
+  
+
+最终，他们回到起点，尝试更好的进行提示工程。他们查看了错误问题的类别，然后基于错误类别通过引入工具获取更精确的信息。例如，他们注意到有结构化数据问题需要从文档中提取数字。于是他们决定只给模型访问SQL数据库的权限，让它插入变量并执行查询，从而带回结构化数据答案。最后，他们尝试了**查询扩展**，将一个问题分解为多个查询并并行执行，然后将结果合成为一个答案。这些方法的结合最终帮助他们达到了98%的准确率。
+
+  
+
+在这个过程中，他们没有使用精调，这一点非常值得注意。在这个案例中，他们**面临的所有问题都与上下文有关**，问题的关键在于没有给它正确的上下文，或者它不知道哪些上下文块是正确的。这就是为什么明确要解决的问题是什么很关键。
+
+![](https://mmbiz.qpic.cn/sz_mmbiz_png/7yjDpC9UfD711My3SnSKCGibJLRWictE3BfTVpnHwbFphOGQzaFp5xchsAdicgtNpQ4CJ5Un5NHSXlBfkrXdTxr7Q/640?wx_fmt=png&from=appmsg)
+
+  
+
+检索出来的结果并不是越多越好。
+
+  
+
+在对**RAG**进行性能评估的过程中，他们采用了四个关键的度量标准(**Ragas score**)。这些标准被划分为两大类：一类是**衡量LLM如何回答问题**的，另一类则是**衡量检索内容与问题的相关性**。
+
+  
+
+第一个度量是**忠实度(Faithfulness)**，它**检查生成答案的事实准确性**，将答案分解为事实，并将这些事实与检索的内容相对应。如果无法对应，则认为是模型的“幻觉”。这个度量提供了一个数值，如果数值低于某个阈值，表明可能出现了幻觉。另一方面，**答案相关性(Answer Relevancy)度量模型生成的答案是否真正针对用户提出的问题**。有时候模型可能会生成一个很好地利用了检索内容的答案，但实际上与用户的原始问题毫不相关。这个度量就是为了衡量这一点。如果发现答案在事实上是准确的，但相关性却很低，这意味着模型可能过于关注内容本身，而忽视了问题的实际要求。这就表明我们可能需要进行提示工程(Prompt Engineering)，或者采取其他措施来促使模型更多关注问题本身，并决定是否应该使用相关内容。
+
+  
+
+在内容相关性方面，需要关注**上下文精确度(Context Precision)**，这是衡量检索内容信噪比的指标。它**评估每一块内容与答案的对应关系**，**以确定内容的使用是否真正对答案有帮助**。此外，**上下文召回(Context Recall)度量模型是否检索到了回答问题所需的所有相关信息**。这是反映搜索优化程度的一个指标，如果召回率很低，表明我们可能需要优化搜索功能，引入重排序，或者对嵌入进行精调(Fine-tuning)，以确保能够检索到更相关的内容。
+
+  
+
+通过这些细致的评估指标，我们能够深入了解并优化LLM在RAG应用中的表现，以实现最佳的性能和效率。
+
+![](https://mmbiz.qpic.cn/sz_mmbiz_png/7yjDpC9UfD711My3SnSKCGibJLRWictE3BGE9vLuObIhU6bBBjWhB8YsvlO2NLU9UgmOXb5jicR2NjBTvwdmEyWVA/640?wx_fmt=png&from=appmsg)
+
+  
+
+  
+
+03
+
+**模型精调(Fine-tuning)**
+
+  
+
+在探讨**RAG**与**模型精调**之间的差异时，研究者们认识到模型精调是一种与提示(prompting)截然不同的技术。模型精调涉及将一个已训练的模型在更小、更特定领域的数据集上继续训练的过程。这个过程是根本性的转变，他们从一个基础模型开始，通过模型精调过程，最终得到一个与原模型完全不同的新模型。
+
+  
+
+**模型精调**：他们从一个在广泛且多样化的数据集上训练好的模型开始，这些模型，比如GPT-3.5 Turbo或GPT-4，拥有关于世界的广泛知识。他们将这种通用模型专门化，精调它们的能力，使其更适合某个特定任务。
+
+为什么要进行模型精调？研究者们特别强调了模型精调的两个主要相关好处。首先，模型精调常常能够实现无模型精调无法达到的性能水平。使用提示(prompt)技术时，研究者们受限于模型的上下文大小，这限制了他们能展示给模型的数据量。而模型精调能够向模型展示比在上下文窗口中能够容纳的数据量多得多的示例。
+
+  
+
+其次，与基础模型相比，精调模型在交互时通常更加高效。**交互时不需要使用复杂的提示技术，也不需要提供复杂的指令、明确的模式或上下文示例**。这意味着每次请求发送的提示token更少，从而使每次请求都更经济、响应更快。精调模型也经常更易于与之交互，这是从成本和延迟的角度来看的。
+
+  
+
+最后，精调的常见用例之一是**从像GPT-4这样的大型模型中提取知识，转移到像GPT-3.5 Turbo这样的小型模型中**。与大型模型相比，与小型模型交互总是更加高效的。
+
+![](https://mmbiz.qpic.cn/sz_mmbiz_png/7yjDpC9UfD711My3SnSKCGibJLRWictE3By1NNZhqX8QhKAUKI9jkxmqCU9dEZeccrkOewobx8R9QHcKVybkkic9g/640?wx_fmt=png&from=appmsg)
+
+**模型精调**非常适合**强调基础模型中已存在的知识**。以文本转SQL任务为例，他们可能有非常强大的通用基础模型，如3.5 Turbo和GPT-4，这些模型对SQL语法、不同的SQL方言以及数据库的工作方式都有深刻理解。但他们可能需要模型精调来强调特定的SQL方言，或者使模型避免走向特定的、容易出错的边缘情况。本质上，他们在做的是取出基础模型中的知识，并强调其中的一部分。
+
+  
+
+**模型精调还非常适合修改或定制模型输出的结构或语调**。早期模型精调的杀手级用例之一是强制模型输出有效的JSON，因为如果试图以编程方式与模型交互，输出有效的JSON在编程上非常容易处理。如果是无效的JSON，则会导致许多错误情况。
+
+  
+
+最后，**教模型复杂的指令**，正如之前提到的，模型精调过程中可以向模型展示比在模型的上下文窗口中能容纳的更多示例。
+
+  
+
+另一方面，**模型精调并不适合给模型添加新知识**。LLM中的知识是在大规模的预训练运行期间植入的，你基本上无法在这些有限的模型精调运行中添加新知识。如果试图给模型添加新知识，可以寻求RAG等方法。此外，**模型精调也不适合快速迭代新用例**。如果进行模型精调，这是一个相对缓慢的反馈循环。需要大量投资来创建数据集以及模型精调的其他各个部分。所以，他们**建议不要以模型精调作为起点**。
+
+![](https://mmbiz.qpic.cn/sz_mmbiz_png/7yjDpC9UfD711My3SnSKCGibJLRWictE3BOt1jpYj11A3yPFhDdlrWibKqapGp53LLfL2rCicnv5TExicYPwbbsD1WA/640?wx_fmt=png&from=appmsg)
+
+  
+
+下面Canva的成功案例突显了模型精调在强调基础模型中已有知识方面的有效性。他们面临的任务是将用户想要的设计模型的自然语言描述转换为结构化的设计指南，然后由LLM输出。他们的目标是使用这些结构化的设计指南来生成全尺寸的模型，并呈现给用户。下图为结果。
+
+  
+
+为什么这个用例会成功？首先，**没有新知识的需求**。解决这个问题所需的所有知识都已经存在于基础模型中，但模型需要输出具有非常特定结构的结果。然后他们使用了**非常高质量的训练数据**，并且有很好的基线来比较两者。他们对3.5 Turbo和GPT-4进行了评估，理解了它们在哪些方面成功，在哪些方面不足，因此他们知道模型精调将是解决这个任务的一个好方法。
+
+![](https://mmbiz.qpic.cn/sz_mmbiz_png/7yjDpC9UfD711My3SnSKCGibJLRWictE3Br6AQGT0UavW93zf5aFiaoolTqIMCSnLtjgtdIIvWBp6lUuJ3FFv32iaw/640?wx_fmt=png&from=appmsg)
+
+实际中如何进行模型精调。
+
+就像任何机器学习问题一样，第一步是获得数据集。与大多数机器学习问题一样，这实际上是最困难的部分。获取数据集的方法有很多，可以下载一个开源数据集，可以在私人市场上购买数据，或者支付给人类标注者来收集并标注数据，也可以从一个更大的模型中提炼数据，前提是该模型的服务条款支持特定的用例。无论如何，必须想办法得到一个用于模型精调的数据集。
+
+  
+
+接下来，启动训练过程。在训练期间理解可以调整的超参数是非常重要的。这些超参数可能会导致过拟合或欠拟合，或者可能会导致灾难性遗忘。需要了解这些可用的超参数以及它们对模型精调结果的影响。
+
+  
+
+接下来，需要了解损失函数的重要性。当进行LLM模型精调时，损失函数是预测下一个token。虽然这在进行模型精调时很有用，但下一个token预测通常与他们关心的下游任务的性能并不总是很好的相关。
+
+  
+
+最后，需要评估模型。评估模型有几种不同的方式。可以让专业人员查看输出并在某种程度上进行排名，或者可以取不同的模型，生成输出，然后进行相互比较。还可以使用像GPT-4这样的更强大的模型来排名输出。
+
+  
+
+最终，部署模型。这些可以形成某种反馈循环和数据反馈循环。可以训练模型，对其进行评估，将其部署到生产环境，从生产中采集样本，使用这些样本构建一个新的数据集，对数据集进行下采样，然后进一步在这个数据集上进行模型精调，从而形成某种飞轮效应。
+
+![](https://mmbiz.qpic.cn/sz_mmbiz_png/7yjDpC9UfD711My3SnSKCGibJLRWictE3B8ictVTibib2LBia5zVMbxfcth4HQpbiayZFKSwVfeXAKtp6Hs0SB0tmalJw/640?wx_fmt=png&from=appmsg) 
+
+总结一些在模型精调时推荐的最佳实践。首先是从**提示工程(prompt engineering)**和**少样本学习(few-shot learning)**开始。这些是非常简单且投入少的技术，能够提供一些直觉来理解LLMs在特定问题上的操作方式，这是开始的好地方。
+
+  
+
+接下来，**建立基准**在转向模型精调之前非常重要。如上面的Canva的成功故事，他们尝试了3.5 Turbo和GPT-4，他们非常好地理解了他们所面临问题的各个方面，了解了这些模型的失败案例以及它们做得好的地方，因此他们确切地知道他们想要通过模型精调来解决的目标是什么。
+
+  
+
+最后，在进行模型精调时，应该从小处着手，不要下载14万条Slack消息并尝试一次性处理。他们**应该开发一个小型的高质量数据集**，执行模型精调，然后**评估模型以确定是否朝着正确的方向前进**。这里可以采取类似主动学习(active learning)的方法。模型精调后，观察模型的输出，看看它在哪些领域存在困难，然后用新数据专门针对这些领域进行改进。在模型精调方面，**数据质量比数据数量更重要**。数据数量是在预训练过程中处理的，现在他们真正要关注的是更少的高质量示例。
+
+![](https://mmbiz.qpic.cn/sz_mmbiz_png/7yjDpC9UfD711My3SnSKCGibJLRWictE3BDG8C9RV1yLRPfqUmN1eKlt9d3ZhPA5Zd19zn3mwRaNwicibiboJLywiaIQ/640?wx_fmt=png&from=appmsg)
+
+  
+
+在某些应用中，模型精调和RAG的结合使用可能是两全其美的方案。通常，这样的工作方式是**先对模型进行精调，使其能够理解复杂指令**，然后就不再需要提供这些复杂的指令或少样本示例了。这些都已经被整合进精调后的模型中。这也意味着为检索到的上下文留出了更多空间。
+
+  
+
+然后，可以**使用RAG将相关知识注入到上下文中**，而此时可用的上下文已经在这一点上被最大化。当然，必须小心不要让上下文过度饱和，可能会与问题无关的噪音。不是检索的结果越多越好。
+
+![](https://mmbiz.qpic.cn/sz_mmbiz_png/7yjDpC9UfD711My3SnSKCGibJLRWictE3Bq3tu8ly1m0UiaaicrTSvuNIYB2e6KSz4butEHSvc0Wfic43IBmVdOpPGA/640?wx_fmt=png&from=appmsg)
+
+**一个示例：通过 Fine-tuning + RAG 达到SOTA效果**
+
+  
+
+任务 **Spider 1.0: Yale Semantic Parsing and Text-to-SQL Challenge**。这个任务上的SOTA精度是 84%(包括很多负责的前后处理流程)。
+
+![](https://mmbiz.qpic.cn/sz_mmbiz_png/7yjDpC9UfD711My3SnSKCGibJLRWictE3BXoUicGmWXbjsbPjlG1W5KEY1z7DZyrp4nBWHHnvSR8sw9YASuZ0IKkA/640?wx_fmt=png&from=appmsg)
+
+Spider 1.0: SQL语句生成任务，左边为输入(表schema，以及自然语言的prompt)，右边为期望的输出(SQL语句)
+
+  
+
+他们开始尝试RAG最简单的方法，也就是简单的检索。他们使用余弦相似度(cosine similarity)，使用问题来查找回答类似问题的SQL查询。他们还尝试了不同的嵌入格式和提示工程，但结果并不理想。随后，他们考虑到一个问题可能会因为不同的数据库模式(schema)而有完全不同的答案，因此仅使用问题进行相似度搜索对这个问题来说并不合适。相反，使用一个假设的问题的答案进行搜索可能会得到更好的结果。
+
+  
+
+他们使用了**假设性文档嵌入(HyDE)**，生成了一个假设的SQL查询，然后基于此进行相似度搜索。这种方法为这个特定问题带来了显著的性能提升。他们还尝试了上下文检索。他们对接收到的问题的难度进行排名，然后仅在RAG中回传相等难度的示例。
+
+  
+
+接下来，他们尝试了一些更高级的技术，比如**思维链推理(chain of thought reasoning)**，尝试让模型识别列，然后识别表，最后构建查询。他们最终采用的方法相对简单，是**自我一致性检查(self-consistency check)**。他们让模型构建一个查询，运行它，然后如果出错，就给出错误信息，并让模型再试一次。这种方法让GPT自我修复，对于有些用例来说，如果延迟和成本不是主要问题，这实际上是相当有效的。
+
+  
+
+他们的结果显示，仅用提示工程开始时，性能并不理想。随后他们添加了少样本示例，获得了一些改进。这表明RAG可以进一步提升性能。使用问题进行搜索时，他们获得了3%的性能提升。而使用假设性文档嵌入，他们获得了进一步的5%提升。仅通过使用假设答案进行搜索，而不是实际输入的问题，他们在性能上获得了巨大的提升。
+
+  
+
+最后，他们仅仅增加了示例数量，就接近达到了该领域的最高水平。这一切仅仅是通过几天的尝试，从提示工程开始，转向RAG，就展示了他们能够从这些非常基本的起点方法中挤压出的巨大性能。
+
+![](https://mmbiz.qpic.cn/sz_mmbiz_png/7yjDpC9UfD711My3SnSKCGibJLRWictE3Bf59RHMyJOCZ4uMlIO26ibvF0V0JYB6CMSxP8q8JBZpztKujDPwIIhZw/640?wx_fmt=png&from=appmsg)
+
+![](https://mmbiz.qpic.cn/sz_mmbiz_png/7yjDpC9UfD711My3SnSKCGibJLRWictE3BYPu4LfunO4tU86bRPsej0sdsB4Ic6f79lz6b5bCAcGhBLFmjkQODbQ/640?wx_fmt=png&from=appmsg)
+
+  
+
+在进行模型精调方面，他们将工作交给了他们的合作伙伴Scale AI。Scale AI首先建立了基线，正如他们之前推荐的，与之前幻灯片中的69%相同。这是仅用简单的提示工程技术实现的。
+
+  
+
+接着，他们对GPT-4进行了模型精调，也是使用简单的提示工程技术，简化了进入示例的模式。通过简单的模型精调和一些提示工程，他们的性能提升至接近82%，现在已经接近行业领先水平。
+
+  
+
+然后他们使用RAG与该模型结合，基本上是根据问题动态地将一些示例注入上下文窗口，这并不是非常高级的RAG技术。他们达到了83.5%的性能，非常接近行业领先水平。
+
+  
+
+他们想要强调的是，如果你看Spider排行榜上的开发集，那里使用的技术非常复杂，涉及大量的数据预处理、数据后处理，经常将边缘情况硬编码到用于评估模型的脚本中。而在这里，他们实际上没有使用任何这些复杂的技术。仅仅是简单的模型精调和提示工程，遵循最佳实践，他们就非常接近这个众所周知基准测试的行业领先水平。
+
+  
+
+这突显了模型精调和RAG结合使用时的强大潜力。
+
+![](https://mmbiz.qpic.cn/sz_mmbiz_png/7yjDpC9UfD711My3SnSKCGibJLRWictE3BRJTW3p95iaKZ7XzFJNmUiarYEGRshRWsyQ3oHflvaz39tTHQhfcDbNnA/640?wx_fmt=png&from=appmsg)
+
+  
+
+  
+
+总结
+
+  
+
+末尾简单总结下。
+
+  
+
+当你在解决一个问题并希望提升LLM的性能时，首先应该从**提示工程**技术开始。这些技术投入低，可以快速迭代，并验证LLMs作为解决你所面临问题的可行技术。你可以不断迭代提示，直到达到性能平台，然后需要分析你遇到的错误类型。
+
+  
+
+如果需要向模型引入新知识或更多上下文，可以选择走**RAG**的路线。如果模型在遵循指令上不一致，或需要遵循严格或新颖的输出结构，或者你需要以更高效的方式与模型交互，那么可能是时候尝试**模型精调**了。
+
+  
+
+重要的是要记住，**这个过程不是线性的**。要达到真正满意的精度，**可能需要很多次的迭代**，而且优化过程中可能会在这些技术之间来回跳跃。
+
+  
+
+  
+
+\-END-
+
+**寻星计划火热进行中**
+
+**开源数据集领好礼**
+
+**戳下方了解**  
+
+👇
+
+[![](https://mmbiz.qpic.cn/sz_mmbiz_jpg/7yjDpC9UfD6OTUAUZZos5lC2WkZxnic2Ht7tZib7huCibtp3EcJgM7VxxaZJhicXqI7meVrGKwnkuK88xQEnMZko3w/640?wx_fmt=jpeg&wxfrom=5&wx_lazy=1&wx_co=1)](http://mp.weixin.qq.com/s?__biz=MzkxMjMxMjIwNQ==&mid=2247524116&idx=1&sn=51ac0acca9f8e5834ab24ecff0f0c25c&chksm=c10c0df6f67b84e000840d9b0208b6d379a18bece0c193748b6a3fa6be61355666a59e3aa5bb&scene=21#wechat_redirect)
+
+![](http://mmbiz.qpic.cn/sz_mmbiz_png/hkUN8E95VAVbP7SgPzUZSbTKQF7ftQZSqvlNRLUiaulic4TPu7FFhCHvUVqQAkxn7uxtIRC8QegvibdibSrlnkwuxg/0?wx_fmt=png) OpenDataLab
+
+ ![](data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3C!-- Icon from Lucide by Lucide Contributors - https://github.com/lucide-icons/lucide/blob/main/LICENSE --%3E%3Cg fill='none' stroke='%23888888' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'%3E%3Cpath d='M2.062 12.348a1 1 0 0 1 0-.696a10.75 10.75 0 0 1 19.876 0a1 1 0 0 1 0 .696a10.75 10.75 0 0 1-19.876 0'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/g%3E%3C/svg%3E) 阅读![](data:image/svg+xml,%3Csvg width='25' height='24' viewBox='0 0 25 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M16.154 6.797l-.177 2.758h4.009c1.346 0 2.359 1.385 2.155 2.763l-.026.148-1.429 6.743c-.212.993-1.02 1.713-1.977 1.783l-.152.006-13.707-.006c-.553 0-1-.448-1-1v-8.58a1 1 0 0 1 1-1h2.44l1.263-.03.417-.018.168-.015.028-.005c1.355-.315 2.39-2.406 2.58-4.276l.01-.16.022-.572.022-.276c.074-.707.3-1.54 1.08-1.883 2.054-.9 3.387 1.835 3.274 3.62zm-2.791-2.52c-.16.07-.282.294-.345.713l-.022.167-.019.224-.023.604-.014.204c-.253 2.486-1.615 4.885-3.502 5.324l-.097.018-.204.023-.181.012-.256.01v8.218l9.813.004.11-.003c.381-.028.72-.304.855-.709l.034-.125 1.422-6.708.02-.11c.099-.668-.354-1.308-.87-1.381l-.098-.007h-5.289l.26-4.033c.09-1.449-.864-2.766-1.594-2.446zM7.5 11.606l-.21.005-2.241-.001v8.181l2.45.001v-8.186z' fill='%23000'/%3E%3C/svg%3E) 赞 ![](data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E  %3Cg fill='none' fill-rule='evenodd'%3E    %3Cpath d='M0 0h24v24H0z'/%3E    %3Cpath fill='%23576B95' d='M13.707 3.288l7.171 7.103a1 1 0 0 1 .09 1.32l-.09.1-7.17 7.104a1 1 0 0 1-1.705-.71v-3.283c-2.338.188-5.752 1.57-7.527 5.9-.295.72-1.02.713-1.177-.22-1.246-7.38 2.952-12.387 8.704-13.294v-3.31a1 1 0 0 1 1.704-.71zm-.504 5.046l-1.013.16c-4.825.76-7.976 4.52-7.907 9.759l.007.287c1.594-2.613 4.268-4.45 7.332-4.787l1.581-.132v4.103l6.688-6.623-6.688-6.623v3.856z'/%3E  %3C/g%3E%3C/svg%3E) 分享 ![](data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='24' height='24' viewBox='0 0 24 24'%3E  %3Cdefs%3E    %3Cpath id='a62bde5b-af55-42c8-87f2-e10e8a48baa0-a' d='M0 0h24v24H0z'/%3E  %3C/defs%3E  %3Cg fill='none' fill-rule='evenodd'%3E    %3Cmask id='a62bde5b-af55-42c8-87f2-e10e8a48baa0-b' fill='%23fff'%3E      %3Cuse xlink:href='%23a62bde5b-af55-42c8-87f2-e10e8a48baa0-a'/%3E    %3C/mask%3E    %3Cg mask='url(%23a62bde5b-af55-42c8-87f2-e10e8a48baa0-b)'%3E      %3Cg transform='translate(0 -2.349)'%3E        %3Cpath d='M0 2.349h24v24H0z'/%3E        %3Cpath fill='%23576B95' d='M16.45 7.68c-.954 0-1.94.362-2.77 1.113l-1.676 1.676-1.853-1.838a3.787 3.787 0 0 0-2.63-.971 3.785 3.785 0 0 0-2.596 1.112 3.786 3.786 0 0 0-1.113 2.687c0 .97.368 1.938 1.105 2.679l7.082 6.527 7.226-6.678a3.787 3.787 0 0 0 .962-2.618 3.785 3.785 0 0 0-1.112-2.597A3.687 3.687 0 0 0 16.45 7.68zm3.473.243a4.985 4.985 0 0 1 1.464 3.418 4.98 4.98 0 0 1-1.29 3.47l-.017.02-7.47 6.903a.9.9 0 0 1-1.22 0l-7.305-6.73-.008-.01a4.986 4.986 0 0 1-1.465-3.535c0-1.279.488-2.56 1.465-3.536A4.985 4.985 0 0 1 7.494 6.46c1.24-.029 2.49.4 3.472 1.29l.01.01L12 8.774l.851-.85.01-.01c1.046-.951 2.322-1.434 3.59-1.434 1.273 0 2.52.49 3.472 1.442z'/%3E      %3C/g%3E    %3C/g%3E  %3C/g%3E%3C/svg%3E) 推荐 ![](data:image/svg+xml,%3Csvg width='25' height='24' viewBox='0 0 25 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M22.242 7a2.5 2.5 0 0 0-2.5-2.5h-14a2.5 2.5 0 0 0-2.5 2.5v8.5a2.5 2.5 0 0 0 2.5 2.5h2.5v1.59a1 1 0 0 0 1.707.7l1-1a.569.569 0 0 0 .034-.03l1.273-1.273a.6.6 0 0 0-.8-.892v-.006L9.441 19.1l.001-2.3h-3.7l-.133-.007A1.3 1.3 0 0 1 4.442 15.5V7l.007-.133A1.3 1.3 0 0 1 5.742 5.7h14l.133.007A1.3 1.3 0 0 1 21.042 7v4.887a.6.6 0 1 0 1.2 0V7z' fill='%23000' fill-opacity='.9'/%3E%3Crect x='14.625' y='16.686' width='7' height='1.2' rx='.6' fill='%23000' fill-opacity='.9'/%3E%3Crect x='18.725' y='13.786' width='7' height='1.2' rx='.6' transform='rotate(90 18.725 13.786)' fill='%23000' fill-opacity='.9'/%3E%3C/svg%3E) 留言
