@@ -8,19 +8,43 @@
 
 ## 安装
 
-在支持 GitHub skill 安装的 Agent 环境中，可使用：
+在支持 GitHub skill 安装的 Agent 环境中，可通过自然语言发起安装：
 
-> 安装 github.com/nanhongchuan/opendatalab-wechat-article-skills 这个 skill。
+> 请将 github.com/nanhongchuan/opendatalab-wechat-article-skills 安装为 skill。
 
-手动安装方式：
+手动安装时，请根据运行环境选择一种方式。
+
+| 环境 | 插件市场支持 | 推荐方式 |
+|------|--------------|----------|
+| Codex | 不使用 Claude Code 插件市场 | 使用 Codex 的 skill 安装机制，或在终端执行 `npx skills add` |
+| Claude Code | 支持 `/plugin` 插件市场 | 在 Claude Code 会话中执行 `/plugin marketplace add` 和 `/plugin install` |
+| OpenClaw | 支持 marketplace 安装 | 在终端执行 `openclaw plugins install --marketplace` |
+
+### Codex / 通用 Skill 安装
+
+在终端执行：
 
 ```bash
 npx skills add nanhongchuan/opendatalab-wechat-article-skills
 ```
 
+### Claude Code 插件市场安装
+
+在 Claude Code 会话中依次执行：
+
 ```text
 /plugin marketplace add nanhongchuan/opendatalab-wechat-article-skills
 /plugin install opendatalab-wechat-article-skills@opendatalab-wechat-article-skills
+```
+
+`/plugin marketplace add` 用于添加 marketplace，`/plugin install` 用于安装该 marketplace 中的插件。
+
+### OpenClaw 插件市场安装
+
+在终端执行：
+
+```bash
+openclaw plugins install opendatalab-wechat-article-skills --marketplace nanhongchuan/opendatalab-wechat-article-skills
 ```
 
 前置要求：`git`、`python3`。`openpyxl` 为可选依赖，仅在通过 `微信公众号文章.xlsx` 重建元数据时使用。

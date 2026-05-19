@@ -8,19 +8,43 @@ English | [中文](README_zh-CN.md)
 
 ## Installation
 
-In agent environments that support GitHub skill installation, use:
+In agent environments that support GitHub skill installation, request installation with:
 
 > Install github.com/nanhongchuan/opendatalab-wechat-article-skills as a skill.
 
-Manual alternatives:
+For manual installation, choose one method according to the target environment.
+
+| Environment | Plugin Marketplace Support | Recommended Method |
+|-------------|----------------------------|--------------------|
+| Codex | Does not use the Claude Code plugin marketplace | Use the Codex skill installation mechanism, or run `npx skills add` in a terminal |
+| Claude Code | Supports the `/plugin` marketplace commands | Run `/plugin marketplace add` and `/plugin install` inside Claude Code |
+| OpenClaw | Supports marketplace installation | Run `openclaw plugins install --marketplace` in a terminal |
+
+### Codex / General Skill Installation
+
+Run in a terminal:
 
 ```bash
 npx skills add nanhongchuan/opendatalab-wechat-article-skills
 ```
 
+### Claude Code Plugin Marketplace Installation
+
+Run the following commands inside Claude Code:
+
 ```text
 /plugin marketplace add nanhongchuan/opendatalab-wechat-article-skills
 /plugin install opendatalab-wechat-article-skills@opendatalab-wechat-article-skills
+```
+
+`/plugin marketplace add` registers the marketplace. `/plugin install` installs the plugin from that marketplace.
+
+### OpenClaw Marketplace Installation
+
+Run in a terminal:
+
+```bash
+openclaw plugins install opendatalab-wechat-article-skills --marketplace nanhongchuan/opendatalab-wechat-article-skills
 ```
 
 Requirements: `git`, `python3`. `openpyxl` is optional and is used only when rebuilding metadata from `微信公众号文章.xlsx`.
