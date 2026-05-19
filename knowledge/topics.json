@@ -1,0 +1,13 @@
+{
+  "MinerU": ["mineru", "pdf", "ocr", "文档解析", "文档提取", "rag", "知识库", "mcp", "api", "版面", "公式", "表格"],
+  "OpenDataLab": ["opendatalab", "openxlab", "开放数据", "数据平台", "数据集平台", "数据生态", "数据要素"],
+  "Dataset": ["数据集", "dataset", "benchmark", "评测", "语料", "标注", "开源数据", "多模态语料"],
+  "LLM": ["大模型", "llm", "gpt", "chatgpt", "书生", "internlm", "internvl", "internthinker", "浦语", "提示工程"],
+  "Multimodal": ["多模态", "视觉语言", "图文", "视频理解", "视频生成", "文生视频", "图像生成"],
+  "AutonomousDriving": ["自动驾驶", "bev", "车道", "点云", "雷达", "occ", "跟踪", "分割", "驾驶"],
+  "MedicalAI": ["医学", "医疗", "病理", "sam-med", "med", "腹部", "乳腺癌", "影像"],
+  "Robotics": ["机器人", "具身", "agibot", "open x-embodiment", "无人机"],
+  "Academic": ["cvpr", "iclr", "acl", "neurips", "aaai", "iccv", "eccv", "论文", "顶会", "tutorial"],
+  "Event": ["直播", "活动", "论坛", "报名", "研讨会", "回放", "邀请", "训练营", "课程"],
+  "Recruiting": ["招聘", "招生", "校招", "博士", "岗位", "人才"]
+}
