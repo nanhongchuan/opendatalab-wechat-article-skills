@@ -1,0 +1,4 @@
+interface:
+  display_name: "OpenDataLab WeChat Articles"
+  short_description: "Search OpenDataLab WeChat articles"
+  default_prompt: "Use $opendatalab-wechat-articles to search and summarize OpenDataLab WeChat articles."

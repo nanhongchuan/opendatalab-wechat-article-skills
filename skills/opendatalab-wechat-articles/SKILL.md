@@ -1,9 +1,9 @@
 ---
-name: opendatalab-wechat-kb
+name: opendatalab-wechat-articles
 description: Use this when the user asks to search, summarize, classify, cite, or reuse OpenDataLab WeChat articles from nanhongchuan/opendatalab-wechat-article-skills, especially for MinerU, RAG, AI datasets, document parsing, OpenDataLab events, tutorials, academic papers, autonomous driving, medical AI, robotics, and large model content planning.
 metadata:
   openclaw:
-    homepage: https://github.com/nanhongchuan/opendatalab-wechat-article-skills#opendatalab-wechat-kb
+    homepage: https://github.com/nanhongchuan/opendatalab-wechat-article-skills#opendatalab-wechat-articles
     requires:
       anyBins:
         - python3
@@ -35,7 +35,7 @@ Script reference:
 
 | Script | Purpose |
 |--------|---------|
-| `scripts/search_remote_repo.py` | Clone/update the GitHub repo and search the knowledge base |
+| `scripts/search_remote_repo.py` | Clone/update the GitHub repo and search the article archive |
 | `scripts/search_articles.py` | Search a local repo cache via `knowledge/manifest.jsonl` and Markdown bodies |
 | `scripts/build_manifest.py` | Build `knowledge/manifest.jsonl` when the remote repo does not include one |
 
@@ -63,7 +63,7 @@ python3 scripts/search_remote_repo.py "数据集" --topic Dataset --top-k 10 --p
 
 The script uses this cache by default:
 
-`~/.cache/opendatalab-wechat-article-skills`
+`/Users/weiliqun/Desktop/OpenDataLab 公众号`
 
 If the cache does not exist, the script clones the GitHub repo. If it exists, the script pulls the latest changes before searching.
 
@@ -85,7 +85,7 @@ knowledge/manifest.jsonl
 knowledge/topics.json
 knowledge/scripts/
 articles/*.md
-skills/opendatalab-wechat-kb/
+skills/opendatalab-wechat-articles/
 微信公众号文章.xlsx
 ```
 

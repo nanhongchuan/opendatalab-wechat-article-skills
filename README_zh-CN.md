@@ -54,7 +54,7 @@ openclaw plugins install opendatalab-wechat-article-skills --marketplace nanhong
 | 路径 | 说明 |
 |------|------|
 | `.claude-plugin/marketplace.json` | `opendatalab-wechat-article-skills` 的插件注册元数据 |
-| `skills/opendatalab-wechat-kb/` | Agent 使用的可安装 skill |
+| `skills/opendatalab-wechat-articles/` | Agent 使用的可安装 skill |
 | `knowledge/manifest.jsonl` | 文章元数据检索索引 |
 | `knowledge/topics.json` | 主题分类规则 |
 | `knowledge/scripts/` | 本地索引与检索脚本 |
@@ -65,9 +65,9 @@ openclaw plugins install opendatalab-wechat-article-skills --marketplace nanhong
 
 ```text
 用户提出请求
-  -> Agent 启用 opendatalab-wechat-kb
+  -> Agent 启用 opendatalab-wechat-articles
   -> skill 运行 scripts/search_remote_repo.py
-  -> 仓库缓存创建或更新到 ~/.cache/opendatalab-wechat-article-skills
+  -> 仓库缓存创建或更新到配置的本地文章存档目录
   -> 优先检索 knowledge/manifest.jsonl
   -> 仅在需要时读取 articles/ 中的 Markdown 原文
   -> Agent 基于标题、文件名和原文链接生成回答
@@ -86,7 +86,7 @@ python3 knowledge/scripts/search_articles.py "数据集" --topic Dataset --top-k
 ```
 
 ```bash
-python3 skills/opendatalab-wechat-kb/scripts/search_remote_repo.py "MinerU MCP Server" --top-k 5 --pretty
+python3 skills/opendatalab-wechat-articles/scripts/search_remote_repo.py "MinerU MCP Server" --top-k 5 --pretty
 ```
 
 ## 索引维护

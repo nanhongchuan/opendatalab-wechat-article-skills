@@ -153,7 +153,7 @@ def search(
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Search OpenDataLab WeChat article knowledge base.")
+    parser = argparse.ArgumentParser(description="Search OpenDataLab WeChat articles.")
     parser.add_argument("query", help="Search query, for example: 'MinerU RAG 知识库'.")
     parser.add_argument("--root", type=Path, default=ROOT, help="Repository root.")
     parser.add_argument("--manifest", type=Path, default=DEFAULT_MANIFEST, help="Manifest JSONL path.")

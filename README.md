@@ -54,7 +54,7 @@ Requirements: `git`, `python3`. `openpyxl` is optional and is used only when reb
 | Path | Description |
 |------|-------------|
 | `.claude-plugin/marketplace.json` | Plugin registration metadata for `opendatalab-wechat-article-skills` |
-| `skills/opendatalab-wechat-kb/` | Installable skill used by agents |
+| `skills/opendatalab-wechat-articles/` | Installable skill used by agents |
 | `knowledge/manifest.jsonl` | Search index for article metadata |
 | `knowledge/topics.json` | Topic classification rules |
 | `knowledge/scripts/` | Local indexing and search scripts |
@@ -65,9 +65,9 @@ Requirements: `git`, `python3`. `openpyxl` is optional and is used only when reb
 
 ```text
 User request
-  -> Agent activates opendatalab-wechat-kb
+  -> Agent activates opendatalab-wechat-articles
   -> Skill runs scripts/search_remote_repo.py
-  -> Repository cache is created or updated under ~/.cache/opendatalab-wechat-article-skills
+  -> Repository cache is created or updated under the configured local article archive
   -> knowledge/manifest.jsonl is searched first
   -> Relevant Markdown files in articles/ are opened only when needed
   -> Agent responds with titles, filenames, and source URLs
@@ -86,7 +86,7 @@ python3 knowledge/scripts/search_articles.py "数据集" --topic Dataset --top-k
 ```
 
 ```bash
-python3 skills/opendatalab-wechat-kb/scripts/search_remote_repo.py "MinerU MCP Server" --top-k 5 --pretty
+python3 skills/opendatalab-wechat-articles/scripts/search_remote_repo.py "MinerU MCP Server" --top-k 5 --pretty
 ```
 
 ## Index Maintenance

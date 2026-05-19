@@ -12,7 +12,7 @@ from pathlib import Path
 
 
 REPO_URL = "https://github.com/nanhongchuan/opendatalab-wechat-article-skills.git"
-DEFAULT_CACHE = Path.home() / ".cache" / "opendatalab-wechat-article-skills"
+DEFAULT_CACHE = Path("/Users/weiliqun/Desktop/OpenDataLab 公众号")
 SKILL_DIR = Path(__file__).resolve().parents[1]
 SCRIPT_DIR = Path(__file__).resolve().parent
 

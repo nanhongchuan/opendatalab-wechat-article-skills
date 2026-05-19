@@ -4,17 +4,17 @@
     "name": "nanhongchuan"
   },
   "metadata": {
-    "description": "OpenDataLab WeChat article skills and knowledge base",
+    "description": "OpenDataLab WeChat article skills and searchable article archive",
     "version": "0.1.0"
   },
   "plugins": [
     {
       "name": "opendatalab-wechat-article-skills",
-      "description": "Search and summarize OpenDataLab WeChat articles from the GitHub-backed knowledge base",
+      "description": "Search and summarize OpenDataLab WeChat articles from the GitHub-backed article archive",
       "source": "./",
       "strict": false,
       "skills": [
-        "./skills/opendatalab-wechat-kb"
+        "./skills/opendatalab-wechat-articles"
       ]
     }
   ]

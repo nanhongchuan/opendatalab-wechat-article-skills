@@ -1,4 +1,0 @@
-interface:
-  display_name: "OpenDataLab WeChat KB"
-  short_description: "Search OpenDataLab WeChat article knowledge base"
-  default_prompt: "Use $opendatalab-wechat-kb to search and summarize OpenDataLab WeChat articles."
