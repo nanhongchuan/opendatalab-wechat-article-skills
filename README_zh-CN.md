@@ -6,7 +6,7 @@
 
 OpenDataLab 微信公众号文章知识库，面向 Claude Code、Codex 等 Agent 使用。安装后，Agent 可以检索、阅读、总结和引用本仓库中的 OpenDataLab 微信文章。
 
-这个仓库既是文章数据仓库，也是一个可安装的 Agent skill。
+这个仓库既是文章语料库，也是一个可安装的 Agent skill。
 
 ## 前置要求
 
@@ -221,4 +221,3 @@ knowledge/manifest.jsonl
 - Markdown 文件名保留导出时的标题形式，方便追溯。
 - `微信公众号文章.xlsx` 是结构化元数据来源。
 - skill 不把正文写进 `SKILL.md`，而是通过索引和脚本按需读取，避免上下文过大。
-
