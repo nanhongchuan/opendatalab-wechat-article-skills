@@ -6,8 +6,8 @@ This repository collects exported OpenDataLab WeChat Official Account articles f
 
 ## Contents
 
-- 343 Markdown articles exported from the OpenDataLab WeChat Official Account.
-- `微信公众号文章.xlsx`, a spreadsheet index for the exported articles.
+- `articles/`, 343 Markdown articles exported from the OpenDataLab WeChat Official Account.
+- `微信公众号文章.xlsx`, a spreadsheet index with account, article ID, URL, author, publication time, cover, summary, and collection metadata.
 - `knowledge/`, a lightweight JSONL index and search scripts.
 - `skills/opendatalab-wechat-kb/`, an agent skill that searches this GitHub-backed knowledge base.
 - `.claude-plugin/marketplace.json`, plugin marketplace metadata following the `skills/<skill-name>` bundle layout.
@@ -28,12 +28,13 @@ knowledge/
   manifest.jsonl
   topics.json
   scripts/
+articles/
+  *.md
 skills/
   opendatalab-wechat-kb/
     SKILL.md
     agents/
     scripts/
-*.md
 微信公众号文章.xlsx
 ```
 
@@ -43,6 +44,12 @@ Search the local repository:
 
 ```bash
 python3 knowledge/scripts/search_articles.py "MinerU RAG 知识库" --top-k 5 --pretty
+```
+
+Rebuild the manifest after adding or updating articles:
+
+```bash
+python3 knowledge/scripts/build_manifest.py
 ```
 
 Search through the skill's GitHub-backed cache:
@@ -67,6 +74,8 @@ skills/opendatalab-wechat-kb
 
 It follows the common skill-bundle structure used by repositories such as `jimliu/baoyu-skills`: keep each installable skill under `skills/<skill-name>/`, register it in `.claude-plugin/marketplace.json`, and keep heavy source data outside `SKILL.md`.
 
+The skill does not embed article bodies in `SKILL.md`. It clones or updates this GitHub repository, reads `knowledge/manifest.jsonl`, and opens the matching Markdown files only when deeper reading is needed. This keeps the skill lightweight while still giving agents access to the full WeChat article corpus and spreadsheet-derived account metadata.
+
 ## Notes
 
-The article filenames are preserved from the export source so they remain traceable to the original titles.
+The article filenames are preserved under `articles/` so they remain traceable to the original titles.

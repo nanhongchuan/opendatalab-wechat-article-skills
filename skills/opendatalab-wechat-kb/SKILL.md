@@ -42,7 +42,7 @@ Script reference:
 ## Workflow
 
 1. Run `scripts/search_remote_repo.py` with the user's query.
-2. Review the JSON results: title, source file, URL, date, topics, summary, and snippet.
+2. Review the JSON results: account, title, source file, URL, date, author, topics, summary, and snippet.
 3. Open the most relevant Markdown files from the cached repo when deeper reading is needed.
 4. Answer with article titles and source filenames. Include original WeChat URLs when present.
 5. For broad planning tasks, group results by topic, audience, date, and reuse scenario.
@@ -71,6 +71,22 @@ If the cache does not exist, the script clones the GitHub repo. If it exists, th
 
 When answering, prefer this source format:
 
-- `文章标题` - `文件名` - `原文链接`
+- `公众号` - `文章标题` - `文件名` - `原文链接`
 
 For content reuse tasks, cite only the local article title and filename unless the user asks for full citations.
+
+## Repository Structure
+
+The GitHub repo is the data source and should keep this shape:
+
+```text
+.claude-plugin/marketplace.json
+knowledge/manifest.jsonl
+knowledge/topics.json
+knowledge/scripts/
+articles/*.md
+skills/opendatalab-wechat-kb/
+微信公众号文章.xlsx
+```
+
+`knowledge/manifest.jsonl` is the lightweight searchable index. It is generated from `articles/*.md` plus `微信公众号文章.xlsx`, so it can carry account-level metadata without loading the spreadsheet during normal search.

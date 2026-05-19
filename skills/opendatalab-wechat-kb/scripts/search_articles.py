@@ -33,6 +33,8 @@ def terms_from_query(query: str) -> list[str]:
 
 def read_article(root: Path, file_name: str) -> str:
     path = root / file_name
+    if not path.exists() and Path(file_name).parent == Path("."):
+        path = root / "articles" / file_name
     if not path.exists():
         return ""
     return path.read_text(encoding="utf-8", errors="ignore")
@@ -125,10 +127,18 @@ def search(
         item = {
             "score": score,
             "body_hits": body_hits,
+            "account": record.get("account"),
+            "wechat_id": record.get("wechat_id"),
             "title": record.get("title"),
             "file": record.get("file"),
             "source_url": record.get("source_url"),
+            "cover_url": record.get("cover_url"),
+            "created_at": record.get("created_at"),
             "published_at": record.get("published_at"),
+            "author": record.get("author"),
+            "is_original": record.get("is_original"),
+            "article_type": record.get("article_type"),
+            "collection": record.get("collection"),
             "topics": record.get("topics", []),
             "keywords": record.get("keywords", []),
             "summary": record.get("summary"),
