@@ -1,46 +1,178 @@
-# OpenDataLab 微信公众号文章
+# OpenDataLab 微信文章知识库
 
-[English](README.md) | [中文](README_zh-CN.md)
+[English](README.md) | 中文
 
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/nanhongchuan/opendatalab-wechat-article)
 
-本仓库收集了 OpenDataLab 微信公众号文章导出内容，方便本地检索、知识库索引，以及后续内容整理与再利用。
+OpenDataLab 微信公众号文章知识库，面向 Claude Code、Codex 等 Agent 使用。安装后，Agent 可以检索、阅读、总结和引用本仓库中的 OpenDataLab 微信文章。
 
-## 内容
+这个仓库既是文章数据仓库，也是一个可安装的 Agent skill。
 
-- `articles/`，343 篇从 OpenDataLab 微信公众号导出的 Markdown 文章。
-- `微信公众号文章.xlsx`，文章索引表，包含账号、文章 ID、原文链接、作者、发布时间、封面、摘要和合集等元数据。
-- `knowledge/`，轻量级 JSONL 索引与检索脚本。
-- `skills/opendatalab-wechat-kb/`，用于检索这个 GitHub 知识库的智能体技能。
-- `.claude-plugin/marketplace.json`，遵循 `skills/<skill-name>` 目录结构的插件市场元数据。
+## 前置要求
 
-## 适用场景
+- 已安装 `git`
+- 已安装 `python3`
+- 如使用 `npx skills add` 安装，需要 Node.js / npm 环境
 
-- 为 Codex 或其他 AI 助手构建本地知识库。
-- 按主题、项目、数据集或活动检索 OpenDataLab 历史文章。
-- 为 RAG 工作流准备结构化元数据和检索索引。
-- 在智能体环境中安装或引用仓库内置技能。
+检索脚本只依赖 Python 标准库；重建索引时如果本机有 `openpyxl`，会自动读取 `微信公众号文章.xlsx` 中的结构化元数据。
+
+## 安装
+
+### 快速安装（推荐）
+
+```bash
+npx skills add nanhongchuan/opendatalab-wechat-article
+```
+
+### 注册插件市场
+
+在支持插件市场的 Agent 中运行：
+
+```bash
+/plugin marketplace add nanhongchuan/opendatalab-wechat-article
+```
+
+### 安装技能
+
+**方式一：通过浏览界面**
+
+1. 选择 **Browse and install plugins**
+2. 选择 **opendatalab-wechat-article**
+3. 选择 **opendatalab-wechat-article** 插件
+4. 选择 **Install now**
+
+**方式二：直接安装**
+
+```bash
+/plugin install opendatalab-wechat-article@opendatalab-wechat-article
+```
+
+**方式三：告诉 Agent**
+
+直接告诉 Agent：
+
+> 请帮我安装 github.com/nanhongchuan/opendatalab-wechat-article 这个 skill
+
+## 更新技能
+
+如果通过插件市场安装，可以在 Agent 中更新：
+
+1. 运行 `/plugin`
+2. 切换到 **Marketplaces**
+3. 选择 **opendatalab-wechat-article**
+4. 选择 **Update marketplace**
+
+也可以启用自动更新，让 Agent 每次启动时获取最新版本。
+
+## 可用插件
+
+当前 marketplace 只暴露一个插件，避免同一个 skill 被重复注册。
+
+| 插件 | 说明 | 包含内容 |
+|------|------|----------|
+| **opendatalab-wechat-article** | 检索和总结 OpenDataLab 微信文章 | `opendatalab-wechat-kb` skill，以及 GitHub 文章知识库 |
+
+## 可用技能
+
+### opendatalab-wechat-kb
+
+OpenDataLab 微信文章知识库检索技能。适合用于：
+
+- 检索 OpenDataLab 历史微信文章
+- 查找 MinerU、RAG、数据集、文档解析、大模型、活动、课程等主题内容
+- 总结文章观点、整理选题、生成引用材料
+- 为内容策划、知识库问答和 RAG 工作流提供语料
+
+示例：
+
+```text
+使用 opendatalab-wechat-kb 查一下 MinerU RAG 相关的文章
+```
+
+```text
+帮我从 OpenDataLab 微信文章里找几篇关于数据集的文章，并按主题分类
+```
+
+```text
+基于 OpenDataLab 微信文章，总结 MinerU 近期产品和生态进展
+```
+
+在 Codex 中也可以明确指定：
+
+```text
+Use $opendatalab-wechat-kb to search MinerU MCP Server articles.
+```
+
+## Agent 工作流程
+
+Agent 使用这个 skill 时，不会一次性加载所有文章正文。它会按下面的流程工作：
+
+```text
+用户提出问题
+  ↓
+Agent 触发 opendatalab-wechat-kb
+  ↓
+读取 skills/opendatalab-wechat-kb/SKILL.md
+  ↓
+运行 scripts/search_remote_repo.py
+  ↓
+克隆或更新 GitHub 仓库到本地缓存
+  ↓
+读取 knowledge/manifest.jsonl
+  ↓
+检索相关文章
+  ↓
+按需打开 articles/ 中的 Markdown 原文
+  ↓
+基于文章内容回答、总结或引用
+```
+
+默认缓存目录：
+
+```text
+~/.cache/opendatalab-wechat-article
+```
 
 ## 仓库结构
 
 ```text
 .claude-plugin/
   marketplace.json
-knowledge/
-  manifest.jsonl
-  topics.json
-  scripts/
-articles/
-  *.md
 skills/
   opendatalab-wechat-kb/
     SKILL.md
     agents/
+      openai.yaml
     scripts/
+      search_remote_repo.py
+      search_articles.py
+      build_manifest.py
+knowledge/
+  manifest.jsonl
+  topics.json
+  scripts/
+    search_articles.py
+    build_manifest.py
+articles/
+  *.md
 微信公众号文章.xlsx
 ```
 
-## 检索
+### 各目录作用
+
+| 路径 | 用途 |
+|------|------|
+| `.claude-plugin/marketplace.json` | 给 Agent / 插件系统读取的注册入口，声明本仓库暴露哪些 skill |
+| `skills/opendatalab-wechat-kb/` | Agent 真正安装和调用的 skill |
+| `skills/opendatalab-wechat-kb/SKILL.md` | 给 Agent 看的使用说明，描述何时触发、如何检索、如何引用 |
+| `skills/opendatalab-wechat-kb/scripts/` | skill 内置脚本，负责远程 clone/update 和检索 |
+| `knowledge/manifest.jsonl` | 轻量索引，每篇文章一条记录 |
+| `knowledge/topics.json` | 主题分类规则 |
+| `knowledge/scripts/` | 本地索引构建和检索脚本 |
+| `articles/` | 微信文章 Markdown 正文 |
+| `微信公众号文章.xlsx` | 文章元数据总表，包含账号、文章 ID、链接、作者、发布时间、封面、摘要等字段 |
+
+## 本地检索
 
 检索本地仓库：
 
@@ -48,36 +180,45 @@ skills/
 python3 knowledge/scripts/search_articles.py "MinerU RAG 知识库" --top-k 5 --pretty
 ```
 
-添加或更新文章后，重新构建 manifest：
+按主题过滤：
+
+```bash
+python3 knowledge/scripts/search_articles.py "数据集" --topic Dataset --top-k 10 --pretty
+```
+
+通过 skill 的远程缓存检索：
+
+```bash
+python3 skills/opendatalab-wechat-kb/scripts/search_remote_repo.py "MinerU MCP Server" --top-k 5 --pretty
+```
+
+## 维护索引
+
+新增或更新 `articles/` 下的 Markdown 文章后，重新构建索引：
 
 ```bash
 python3 knowledge/scripts/build_manifest.py
 ```
 
-通过技能的 GitHub 缓存检索：
+构建过程会读取：
 
-```bash
-python3 skills/opendatalab-wechat-kb/scripts/search_remote_repo.py "MinerU RAG 知识库" --top-k 5 --pretty
-```
+- `articles/*.md`
+- `微信公众号文章.xlsx`
+- `knowledge/topics.json`
 
-远程检索脚本会将本仓库克隆或更新到：
-
-```text
-~/.cache/opendatalab-wechat-article
-```
-
-## 技能
-
-内置技能位于：
+然后生成：
 
 ```text
-skills/opendatalab-wechat-kb
+knowledge/manifest.jsonl
 ```
 
-它采用与 `jimliu/baoyu-skills` 等仓库类似的技能包结构：每个可安装技能都放在 `skills/<skill-name>/` 下，在 `.claude-plugin/marketplace.json` 中注册，并将体量较大的源数据保留在 `SKILL.md` 之外。
+`manifest.jsonl` 中会保存标题、文件路径、原文链接、公众号、作者、发布时间、摘要、主题标签和关键词，供 Agent 快速检索。
 
-该技能不会把文章正文嵌入 `SKILL.md`。它会克隆或更新这个 GitHub 仓库，读取 `knowledge/manifest.jsonl`，并且只在需要深入阅读时打开匹配的 Markdown 文件。这样既能保持技能轻量，也能让智能体访问完整的微信公众号文章语料和从表格整理出的账号元数据。
+## 数据说明
 
-## 说明
+- 当前包含 343 篇 OpenDataLab 微信文章。
+- 文章正文集中保存在 `articles/`。
+- Markdown 文件名保留导出时的标题形式，方便追溯。
+- `微信公众号文章.xlsx` 是结构化元数据来源。
+- skill 不把正文写进 `SKILL.md`，而是通过索引和脚本按需读取，避免上下文过大。
 
-`articles/` 下保留了原始文章标题对应的文件名，方便追溯每篇文章。
