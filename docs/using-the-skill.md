@@ -1,4 +1,4 @@
-# Using the OpenDataLab WeChat KB Skill
+# Using opendatalab-wechat-article-skills
 
 This repository follows the common skill-bundle layout:
 
@@ -33,7 +33,7 @@ python3 skills/opendatalab-wechat-kb/scripts/search_remote_repo.py "MinerU RAG ç
 By default, the remote-backed script uses:
 
 ```text
-~/.cache/opendatalab-wechat-article
+~/.cache/opendatalab-wechat-article-skills
 ```
 
 ## Install as a Codex Skill

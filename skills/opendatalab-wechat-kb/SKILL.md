@@ -1,22 +1,22 @@
 ---
 name: opendatalab-wechat-kb
-description: Use this when the user asks to search, summarize, classify, cite, or reuse OpenDataLab WeChat articles from nanhongchuan/opendatalab-wechat-article, especially for MinerU, RAG, AI datasets, document parsing, OpenDataLab events, tutorials, academic papers, autonomous driving, medical AI, robotics, and large model content planning.
+description: Use this when the user asks to search, summarize, classify, cite, or reuse OpenDataLab WeChat articles from nanhongchuan/opendatalab-wechat-article-skills, especially for MinerU, RAG, AI datasets, document parsing, OpenDataLab events, tutorials, academic papers, autonomous driving, medical AI, robotics, and large model content planning.
 metadata:
   openclaw:
-    homepage: https://github.com/nanhongchuan/opendatalab-wechat-article#opendatalab-wechat-kb
+    homepage: https://github.com/nanhongchuan/opendatalab-wechat-article-skills#opendatalab-wechat-kb
     requires:
       anyBins:
         - python3
         - git
 ---
 
-# OpenDataLab WeChat Knowledge Base
+# OpenDataLab WeChat Article Skills
 
 ## Source of Truth
 
 The canonical article repository is:
 
-`https://github.com/nanhongchuan/opendatalab-wechat-article`
+`https://github.com/nanhongchuan/opendatalab-wechat-article-skills`
 
 Do not assume the article corpus is bundled in this skill. The skill should clone or update the GitHub repo into a local cache, then search that cache.
 
@@ -63,7 +63,7 @@ python3 scripts/search_remote_repo.py "数据集" --topic Dataset --top-k 10 --p
 
 The script uses this cache by default:
 
-`~/.cache/opendatalab-wechat-article`
+`~/.cache/opendatalab-wechat-article-skills`
 
 If the cache does not exist, the script clones the GitHub repo. If it exists, the script pulls the latest changes before searching.
 

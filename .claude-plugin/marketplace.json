@@ -1,15 +1,15 @@
 {
-  "name": "opendatalab-wechat-article",
+  "name": "opendatalab-wechat-article-skills",
   "owner": {
     "name": "nanhongchuan"
   },
   "metadata": {
-    "description": "OpenDataLab WeChat article knowledge base and agent skill",
+    "description": "OpenDataLab WeChat article skills and knowledge base",
     "version": "0.1.0"
   },
   "plugins": [
     {
-      "name": "opendatalab-wechat-article",
+      "name": "opendatalab-wechat-article-skills",
       "description": "Search and summarize OpenDataLab WeChat articles from the GitHub-backed knowledge base",
       "source": "./",
       "strict": false,

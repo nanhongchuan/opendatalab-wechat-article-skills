@@ -1,26 +1,26 @@
-# OpenDataLab WeChat Knowledge Base
+# opendatalab-wechat-article-skills
 
 English | [中文](README_zh-CN.md)
 
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/nanhongchuan/opendatalab-wechat-article)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/nanhongchuan/opendatalab-wechat-article-skills)
 
-OpenDataLab WeChat Knowledge Base provides an installable agent skill and a searchable corpus of OpenDataLab WeChat articles.
+`opendatalab-wechat-article-skills` provides an installable agent skill and a searchable corpus of OpenDataLab WeChat articles.
 
 ## Installation
 
 In agent environments that support GitHub skill installation, use:
 
-> Install github.com/nanhongchuan/opendatalab-wechat-article as a skill.
+> Install github.com/nanhongchuan/opendatalab-wechat-article-skills as a skill.
 
 Manual alternatives:
 
 ```bash
-npx skills add nanhongchuan/opendatalab-wechat-article
+npx skills add nanhongchuan/opendatalab-wechat-article-skills
 ```
 
 ```text
-/plugin marketplace add nanhongchuan/opendatalab-wechat-article
-/plugin install opendatalab-wechat-article@opendatalab-wechat-article
+/plugin marketplace add nanhongchuan/opendatalab-wechat-article-skills
+/plugin install opendatalab-wechat-article-skills@opendatalab-wechat-article-skills
 ```
 
 Requirements: `git`, `python3`. `openpyxl` is optional and is used only when rebuilding metadata from `微信公众号文章.xlsx`.
@@ -29,7 +29,7 @@ Requirements: `git`, `python3`. `openpyxl` is optional and is used only when reb
 
 | Path | Description |
 |------|-------------|
-| `.claude-plugin/marketplace.json` | Plugin registration metadata |
+| `.claude-plugin/marketplace.json` | Plugin registration metadata for `opendatalab-wechat-article-skills` |
 | `skills/opendatalab-wechat-kb/` | Installable skill used by agents |
 | `knowledge/manifest.jsonl` | Search index for article metadata |
 | `knowledge/topics.json` | Topic classification rules |
@@ -43,7 +43,7 @@ Requirements: `git`, `python3`. `openpyxl` is optional and is used only when reb
 User request
   -> Agent activates opendatalab-wechat-kb
   -> Skill runs scripts/search_remote_repo.py
-  -> Repository cache is created or updated under ~/.cache/opendatalab-wechat-article
+  -> Repository cache is created or updated under ~/.cache/opendatalab-wechat-article-skills
   -> knowledge/manifest.jsonl is searched first
   -> Relevant Markdown files in articles/ are opened only when needed
   -> Agent responds with titles, filenames, and source URLs

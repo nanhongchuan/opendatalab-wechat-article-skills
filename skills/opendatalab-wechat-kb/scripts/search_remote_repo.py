@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Clone/update the OpenDataLab WeChat article repo and search it."""
+"""Clone/update the OpenDataLab WeChat article skills repo and search it."""
 
 from __future__ import annotations
 
@@ -11,8 +11,8 @@ import sys
 from pathlib import Path
 
 
-REPO_URL = "https://github.com/nanhongchuan/opendatalab-wechat-article.git"
-DEFAULT_CACHE = Path.home() / ".cache" / "opendatalab-wechat-article"
+REPO_URL = "https://github.com/nanhongchuan/opendatalab-wechat-article-skills.git"
+DEFAULT_CACHE = Path.home() / ".cache" / "opendatalab-wechat-article-skills"
 SKILL_DIR = Path(__file__).resolve().parents[1]
 SCRIPT_DIR = Path(__file__).resolve().parent
 
