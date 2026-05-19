@@ -1,5 +1,7 @@
 # OpenDataLab WeChat Articles
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/nanhongchuan/opendatalab-wechat-article)
+
 This repository collects exported OpenDataLab WeChat Official Account articles for local search, knowledge-base indexing, and downstream content organization.
 
 ## Contents
